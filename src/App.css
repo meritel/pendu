@@ -1,0 +1,150 @@
+.App {
+  text-align: center;
+  margin:0;
+  padding:0;
+}
+.App-header {
+	position:relative;
+	padding:8px;
+	background-color: #222;
+	min-height: 60px;
+	min-width:500px;
+	color: white;
+	margin-bottom:50px;
+	max-width:100%;
+	margin:auto;
+	border-left:2px solid #666;
+	border-top:2px solid #666;
+	border-right:2px solid #666;
+	-webkit-border-radius: 8px 8px 0px 0px; -moz-border-radius: 8px 8px 0px 0px;border-radius: 8px 8px 0px 0px;
+	-moz-box-shadow: 0px 0px 5px 0px #656565;
+	-webkit-box-shadow: 0px 0px 5px 0px #656565;
+	-o-box-shadow: 0px 0px 5px 0px #656565;
+	box-shadow: 0px 0px 5px 0px #656565;
+}
+.App-title {
+	font-size: 1.8em;
+}
+.phrase {
+	padding:20px 0;
+	letter-spacing:5px;
+	font-size:1.5em;
+	margin-bottom:30px;
+	min-height: 80px;
+	background:#eee;
+	border-left:2px solid #666;
+	border-bottom:2px solid #666;
+	border-right:2px solid #666;
+	webkit-border-radius: 0px 0px 8px 8px; -moz-border-radius: 0px 0px 8px 8px;border-radius: 0px 0px 8px 8px;
+	-moz-box-shadow: 0px 0px 5px 0px #656565;
+	-webkit-box-shadow: 0px 0px 5px 0px #656565;
+	-o-box-shadow: 0px 0px 5px 0px #656565;
+	box-shadow: 0px 0px 5px 0px #656565;
+}
+.keyboard {
+	font-size:1.5em;
+	padding:10px;
+	background:#ccc;
+}
+
+.keyboard > .character {
+	margin:2px;
+	min-width:35px;
+	min-height:35px;
+	cursor:pointer;
+}
+
+.keyboard > .character.clicked {
+	cursor: not-allowed;
+	border:1px solid #df0909;
+	-webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;
+	font-size:12px;
+	padding: 8px;
+	text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+	font-weight:bold;
+	color: #FFFFFF;
+	background-color: #f62b2b;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f62b2b), to(#d20202));
+	background-image: -webkit-linear-gradient(top, #f62b2b, #d20202);
+	background-image: -moz-linear-gradient(top, #f62b2b, #d20202);
+	background-image: -ms-linear-gradient(top, #f62b2b, #d20202);
+	background-image: -o-linear-gradient(top, #f62b2b, #d20202);
+	background-image: linear-gradient(to bottom, #f62b2b, #d20202);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f62b2b, endColorstr=#d20202);
+}
+.keyboard > .character.found {
+	border:1px solid #34740e; 
+	-webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;
+	font-size:12px;
+	padding: 8px;
+	text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+	font-weight:bold;
+	color: #FFFFFF;
+	background-color: #4ba614;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00));
+	background-image: -webkit-linear-gradient(top, #4ba614, #008c00);
+	background-image: -moz-linear-gradient(top, #4ba614, #008c00);
+	background-image: -ms-linear-gradient(top, #4ba614, #008c00);
+	background-image: -o-linear-gradient(top, #4ba614, #008c00);
+	background-image: linear-gradient(to bottom, #4ba614, #008c00);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#4ba614, endColorstr=#008c00);
+}
+.keyboard > .character.found:hover {
+	border:1px solid #224b09;
+	background-color: #36780f;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900));
+	background-image: -webkit-linear-gradient(top, #36780f, #005900);
+	background-image: -moz-linear-gradient(top, #36780f, #005900);
+	background-image: -ms-linear-gradient(top, #36780f, #005900);
+	background-image: -o-linear-gradient(top, #36780f, #005900);
+	background-image: linear-gradient(to bottom, #36780f, #005900);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#36780f, endColorstr=#005900);
+}
+.hangedman {
+	position:relative;
+	margin:auto;
+}
+.hangedman .hide {
+	opacity:0.05;
+}
+.end {
+	margin:20px auto;
+	padding:4px;
+	font-weight:bold;
+	max-width:50%;
+}
+.won {
+	background:#bdfcbe;
+	color:green;
+	border:1px solid green;
+}
+.lost {
+	background:#ffcece;
+	color:red;
+	border:1px solid red;
+}
+.players-info {
+	position:absolute;
+	top:2%;
+	left:1%;
+	color:#ddd;
+	font-variant:small-caps;
+	text-align:left;
+}
+.players-info ul{
+	margin:5px 0;
+	padding-left:15px;
+}
+.players-info li{
+	list-style-type:'- ';
+	font-variant:none;
+}
+.btn-start-game {
+	cursor:pointer;
+	
+}
+.btn-player-add {
+	width:auto;
+	height:auto;
+	margin:0;
+	padding:1px;
+	display:inline;
+	cursor:pointer;
+}
