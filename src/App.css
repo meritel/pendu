@@ -131,10 +131,19 @@
 .players-info ul{
 	margin:5px 0;
 	padding-left:15px;
+	font-variant:none;
+	list-style-type:"- ";
 }
 .players-info li{
-	list-style-type:'- ';
-	font-variant:none;
+	font-style:italic;
+}
+.players-info li.playing{
+	font-style:normal;
+	color:#ffffff;
+	font-weight:bold;
+}
+.players-info li.playing::after{
+	content: " (← à ton tour)";
 }
 .btn-start-game {
 	cursor:pointer;

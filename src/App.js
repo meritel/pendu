@@ -6,6 +6,7 @@ import './App.css'
 
 const PHRASES = ['ABRICOT','ANGLE','GOUTTES','BRUN','TRANQUILLE','BRICOLAGE','RECULER','AMOUR','NANOU','PTITLOUP','HARRY POTTER','HERMIONE','HEDWIGE','QUIDDITCH','MAISON']
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+const MAX_PLAYERS = 5
 
 const Phrase = ({phrase}) => <div className="phrase" >{phrase}</div>
 const Key = ({character, feedback, onClick}) => <button className={`character ${feedback}`} title={character} onClick={()=>onClick(character)}>{character}</button>
@@ -31,25 +32,26 @@ const HangedMan = ({trycount}) => (
 							</svg>
 						</React.Fragment>
 )
-const Player = ({name}) => <div className="player-name">{name}</div>
-const ButtonStartGame = ({onStartGame}) => <button className="btn-start-game" onClick={onStartGame} >&#x2714; Commencer la partie</button>
-const PlayersAdd = ({onPlayerAdd,i,onKeyPress,onStartGame})=> (
+const ButtonGameStart = ({onGameStart,players}) => <button disabled={players.length===0} className="btn-start-game" onClick={()=>onGameStart()} title="Commencer une nouvelle partie" >&#x2714; Commencer la partie</button>
+const ButtonPlayerAdd = ({onPlayerAdd}) => <button className="btn-player-add" onClick={onPlayerAdd} disabled={()=>{ return this.myInput.value.length===0}} ><span role="img" aria-label="Valider">&#x2705; Ajouter le joueur</span></button>
+const PlayersAdd = ({onPlayerAdd,onKeyPress,onGameStart,players})=> (
 						<React.Fragment>
 							<br/>
-							Joueur {i} : <input type="text" placeholder="Nom du joueur" ref={(el)=>this.myInput = el} onKeyPress={(ev)=>{if(ev.key === 'Enter') onPlayerAdd(this.myInput)}} /> <button className="btn-player-add" onClick={()=>onPlayerAdd(this.myInput)} ><span role="img" aria-label="Valider">&#x2705;</span></button>
+							Joueur {players.length+1} {players.length+1===MAX_PLAYERS?'(dernier) ':''}: <input type="text" placeholder="Nom du joueur" ref={(el)=>this.myInput = el} onKeyPress={(ev)=>{if(ev.key === 'Enter') onPlayerAdd(this.myInput)}} /> <ButtonPlayerAdd onPlayerAdd={()=>onPlayerAdd(this.myInput)}/>
+								{console.log(()=>this.myInput.value)}
 							<br/>
 							<br/>
-							<ButtonStartGame onStartGame={()=>onStartGame()}/>
+							<ButtonGameStart onGameStart={()=>onGameStart()} players={players}/>
 						</React.Fragment>
 )
-const PlayersInfo = ({players}) => (
+const PlayersInfo = ({players,currentPlayer}) => (
 						<React.Fragment>
 							<div className="players-info">
-								Joueurs :
+								<u>Joueurs</u> :
 								<ul>
 									{players.map(
 										(player,i)=> (
-											<li key={i}><small>{i+1} :</small> {player}</li>
+											<li key={i} className={(currentPlayer===player)?'playing':'waiting'}>{player}</li>
 										)
 									)}
 								</ul>
@@ -83,13 +85,21 @@ class App extends Component {
 		guesses: 0,						// Nombre de tentatives
 		win: false,						// indicateur : partie gagnée
 		end: false,						// indicateur : partie perdue,
-		players: [],
-		currentPlayer:"",
-		gameStarted: false
+		players: [],					// tableau des joueurs
+		currentPlayer:"",				// joueur en cours
+		gameStarted: false				// si le jeu a démarré
 	}
 	
-	onStartGame=()=>{
-		this.setState({gameStarted:true})
+	/**
+	 * [fonction fléchée pour garantie du this]
+	*/
+	onGameStart=()=>{
+		const {players} = this.state
+		if(players.length===0) return alert('Ajouter au moins un joueur')
+		this.setState({
+			gameStarted:true,
+			currentPlayer:sample(players)
+		})
 		document.addEventListener('keypress',(e)=>{this.handleCharacterGiven(e.key)})
 	}
 	
@@ -98,6 +108,7 @@ class App extends Component {
 	*/
 	onPlayerAdd = (input) => {
 		const {players} = this.state
+		if(players.includes(input.value)) return alert('Ce nom est déjà pris.')
 		players.push(input.value)
 		this.setState({players:players})
 		input.value=""
@@ -187,15 +198,14 @@ class App extends Component {
 		return (
 			<div className="App">
 				<header className="App-header">
-					<PlayersInfo players={players}/>
+					<PlayersInfo players={players} currentPlayer={currentPlayer}/>
 					<h1 className="App-title">Jeu du pendu</h1>
 					<HangedMan trycount={guesses-matchedLetters.size}/>
 				</header>
-				{players.length<5 && (players.length===0 || !gameStarted) ? <PlayersAdd i={players.length+1} onPlayerAdd={this.onPlayerAdd} onStartGame={this.onStartGame}/>
+				{players.length<MAX_PLAYERS && (players.length===0 || !gameStarted) ? <PlayersAdd players={players} onPlayerAdd={this.onPlayerAdd} onGameStart={this.onGameStart}/>
 					: (
 						<React.Fragment>
 							<Phrase phrase={this.computeDisplay(secret,usedLetters)} />
-							<Player name={currentPlayer}/>
 							{end && win && <div className="end won">BRAVO !!</div>}
 							{end && !win && <div className="end lost">PERDU !! Le mot était : {secret}</div>}
 							
