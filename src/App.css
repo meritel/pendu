@@ -120,6 +120,15 @@
 	color:red;
 	border:1px solid red;
 }
+.next-word,.reset-game,.btn-start-game,.btn-player-add {
+	cursor:pointer;
+}
+.next-word::after{
+	content: " ⇒";
+}
+.reset-game::after{
+	content: " ↻";
+}
 .players-info {
 	position:absolute;
 	top:2%;
@@ -145,15 +154,10 @@
 .players-info li.playing::after{
 	content: " (← à ton tour)";
 }
-.btn-start-game {
-	cursor:pointer;
-	
-}
 .btn-player-add {
 	width:auto;
 	height:auto;
 	margin:0;
 	padding:1px;
 	display:inline;
-	cursor:pointer;
 }
